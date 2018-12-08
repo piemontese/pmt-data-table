@@ -15,6 +15,20 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "pmt-data-table": [
+        "dist/pmt-data-table"
+      ],
+      "pmt-data-table/*": [
+        "dist/pmt-data-table/*"
+      ],
+      "ptm-data-table": [
+        "dist/ptm-data-table"
+      ],
+      "ptm-data-table/*": [
+        "dist/ptm-data-table/*"
+      ]
+    }
   }
 }

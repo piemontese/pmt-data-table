@@ -29,7 +29,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -119,6 +121,46 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "pmt-data-table": {
+      "root": "projects/pmt-data-table",
+      "sourceRoot": "projects/pmt-data-table/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/pmt-data-table/tsconfig.lib.json",
+            "project": "projects/pmt-data-table/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/pmt-data-table/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/pmt-data-table/src/test.ts",
+            "tsConfig": "projects/pmt-data-table/tsconfig.spec.json",
+            "karmaConfig": "projects/pmt-data-table/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/pmt-data-table/tsconfig.lib.json",
+              "projects/pmt-data-table/tsconfig.spec.json"
+            ],
             "exclude": [
               "**/node_modules/**"
             ]

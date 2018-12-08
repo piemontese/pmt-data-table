@@ -1,20 +1,34 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<button mat-raised-button>PmtDataTable</button>
 
+      <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center">
+        <lib-pmt-base-data-table style="width: 95%; min-width: 600px;" 
+ 		        								 title="User list" 
+		        								 baseUrl="https://jsonplaceholder.typicode.com/users"
+		        								 dataType="json"
+		        								 type="GET"        								
+		        								 [buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
+		        								  						{ caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
+		        								 [iconButtons]="[ { icon: 'refresh', position: 'right', action: 'refresh', color: 'prymary', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+		        								 [displayedColumns]="['name', 'email', 'phone', 'company']" 
+		        								 [displayedColumnsNames]="['Name', 'Email', 'Phone', 'Company']"> </lib-pmt-base-data-table>
+      </div>
+
+      <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center">
+				<lib-pmt-data-table style="width: 95%; min-width: 600px;" 
+								color="accent"
+								title="User list" 
+								method="TH_USER_LIST"
+								methodType = "F"
+								webrfcLog = "true"
+								webrfcLogin = "true"
+								webrfcUser = "user1"
+								webrfcPassword = "Ostrakon1!"
+								noRefreshColumns = "true"
+								table="USRLIST"
+								[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
+								[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
+											 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
+								[iconButtons]="[ { icon: 'refresh', position: 'right', action: 'refresh', color: 'prymary', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+								[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
+								[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>
+      </div>
