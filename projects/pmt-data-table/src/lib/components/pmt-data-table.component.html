@@ -1,5 +1,6 @@
-<div class="example-container mat-elevation-z8">
-	<mat-toolbar [color]="color"> 
+<div class="example-container mat-elevation-z10">
+	<mat-toolbar [color]="color"
+							 class="mat-elevation-z10"> 
 		<mat-toolbar-row>
 			{{title}}
 			<div fxLayout="row" fxFlex fxLayoutAlign="end">
@@ -19,10 +20,10 @@
 				</button>
 				<button mat-icon-button *ngFor="let iconButton of iconButtons | position: 'right' | row: 0"
 									    (click)="iconBbuttonClick(iconButton)"
-										[matTooltip]="iconButton.tooltip"
-		  						    	[disabled]="iconButton.disabled"
-										color="primary">
-					<mat-icon [color]="iconButton.disabled ? '' : 'primary'">{{iconButton.icon}}</mat-icon>
+											[matTooltip]="iconButton.tooltip"
+		  						    [disabled]="iconButton.disabled"
+											color="iconButton.color">
+					<mat-icon [color]="iconButton.disabled ? '' : 'iconButton.color'">{{iconButton.icon}}</mat-icon>
 				</button>
 			</div>
 		</mat-toolbar-row> 
@@ -31,16 +32,16 @@
 							   (click)="buttonClick(button)"
 							   [matTooltip]="button.tooltip"
 							   [disabled]="button.disabled"
-							   color="primary">
-				<mat-icon [color]="button.disabled ? '' : 'primary'">{{button.icon}}</mat-icon>
+							   color="iconButton.color">
+				<mat-icon [color]="button.disabled ? '' : 'iconButton.color'">{{button.icon}}</mat-icon>
 				{{button.caption}}
 			</button>
 			<button mat-icon-button *ngFor="let iconButton of iconButtons | position: 'left' | row: 1"
 									(click)="iconBbuttonClick(iconButton)"
 									[matTooltip]="iconButton.tooltip"
 									[disabled]="iconButton.disabled"
-									color="primary">
-				<mat-icon [color]="iconButton.disabled ? '' : 'primary'">{{iconButton.icon}}</mat-icon>
+									color="iconButton.color">
+				<mat-icon [color]="iconButton.disabled ? '' : 'iconButton.color'">{{iconButton.icon}}</mat-icon>
 			</button>
 		
 			<div fxLayout="row" fxFlex fxLayoutAlign="center">
@@ -56,8 +57,8 @@
 										(click)="iconBbuttonClick(iconButton)"
 										[matTooltip]="iconButton.tooltip"
 										[disabled]="iconButton.disabled"
-										color="primary">
-					<mat-icon [color]="iconButton.disabled ? '' : 'primary'">{{iconButton.icon}}</mat-icon>
+										color="iconButton.color">
+					<mat-icon [color]="iconButton.disabled ? '' : 'iconButton.color'">{{iconButton.icon}}</mat-icon>
 				</button>
 			</div>
 			
@@ -75,8 +76,8 @@
 										(click)="iconBbuttonClick(iconButton)"
 										[matTooltip]="iconButton.tooltip"
 										[disabled]="iconButton.disabled"
-										color="primary">
-					<mat-icon [color]="iconButton.disabled ? '' : 'primary'">{{iconButton.icon}}</mat-icon>
+										color="iconButton.color">
+					<mat-icon [color]="iconButton.disabled ? '' : 'iconButton.color'">{{iconButton.icon}}</mat-icon>
 				</button>
 			</div>
 		</mat-toolbar-row> 
@@ -200,7 +201,7 @@
 	<mat-progress-bar	mode="indeterminate" *ngIf="progress"></mat-progress-bar> 
 	
 	<mat-table #table [dataSource]="dataSource" matSort
-					  class="example-table">
+					   class="example-table">
 		<ng-container *ngFor="let col of displayedColumns; let i=index;"
 					  matColumnDef="{{col}}"> 
 			<mat-header-cell *matHeaderCellDef mat-sort-header class="example-header-cell">
@@ -213,14 +214,14 @@
 						class="example-header-row">
 		</mat-header-row> 
 		<mat-row *matRowDef="let row; columns: displayedColumns;" 
-				 class="example-row"
-				 [ngClass]="{'selected-row': row.selected===true}"
-				 (click)="selectItem(row)"></mat-row>
+						 class="example-row"
+						 [ngClass]="{'selected-row': row.selected===true}"
+						 (click)="selectItem(row)"></mat-row>
 	</mat-table>
 
 	<mat-paginator #paginator 
-				   [length]="dataSource.data.length"
-				   [pageIndex]="0" [pageSize]="25"
-				   [pageSizeOptions]="[5, 10, 25, 50, 100]"> </mat-paginator>
+								 [length]="dataSource.data.length"
+								 [pageIndex]="0" [pageSize]="25"
+								 [pageSizeOptions]="[5, 10, 25, 50, 100]"> </mat-paginator>
 
 </div>

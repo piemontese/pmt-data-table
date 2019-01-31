@@ -3,6 +3,7 @@ import { BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material';
 // import { Observable } from 'rxjs';
 
 // import * as jQuery from 'jquery';
@@ -12,6 +13,13 @@ import { PmtDataSourceService } from '../services/pmt-data-source.service';
 import { DateAdapter } from '@angular/material';
 
 import { PmtDialogService } from 'pmt-dialog';
+
+import { Fields } from './commons/pmt-base-data-table/pmt-base-data-table.component';
+import { Buttons } from './commons/pmt-base-data-table/pmt-base-data-table.component';
+import { IconButtons } from './commons/pmt-base-data-table/pmt-base-data-table.component';
+
+// import * as packageJson from '../../package.json';
+// const version = packageJson.default.version;
 
 /*
 export interface Fields {
@@ -27,6 +35,7 @@ export interface Fields {
   bind: string;
 }
 */
+/*
 export class Fields {
   name = '';
   type = '';
@@ -41,8 +50,8 @@ export class Fields {
   isTable = 'false';
   row = '0';
   bind = '';  // method to get data
-}
-
+}*/
+/*
 export interface Buttons {
   caption: string;
   icon: string;      // search, edit, content_copy, add, delete
@@ -65,6 +74,7 @@ export interface IconButtons {
   disabled: boolean;
   multiSel: boolean;
 }
+*/
 
 @Component({
   selector: 'lib-pmt-data-table',
@@ -72,6 +82,7 @@ export interface IconButtons {
   styleUrls: ['./pmt-data-table.component.scss']
 })
 export class PmtDataTableComponent implements OnInit {
+  appVersion;
   @Input() title = 'Sample table';
   @Input() color = '';
   @Input() filter = true;
@@ -92,7 +103,7 @@ export class PmtDataTableComponent implements OnInit {
   @Input() buttons: Buttons[] = [];
   @Input() iconButtons: IconButtons[] = [];
   @Input() multiSelection = false;
-  @Input() baseUrl = 'http://127.0.0.1:8000/sap/bc/webrfc';
+  @Input() baseUrl = 'http://127.0.0.1:8001/sap/bc/webrfc';
   // @Input() sapUser = 'developer';
   // @Input() sapPassword = 'Ostrakon1!';
   // @Input() sapClient = '';
@@ -117,9 +128,15 @@ export class PmtDataTableComponent implements OnInit {
               public dataTableDetailService: PmtDataTableDetailService,
               public dataSourceService: PmtDataSourceService,
               private dateAdapter: DateAdapter<Date>,
-              private sanitizer: DomSanitizer ) {
+              private sanitizer: DomSanitizer,
+              iconRegistry: MatIconRegistry ) {
     this.dataSource = new MatTableDataSource([]);
     this.dateAdapter.setLocale('it-IT');
+    iconRegistry.addSvgIcon(
+        'thumbs-up',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
+ //   debugger;
+ //   this.appVersion = version;
   }
 
   public buttonClick(button: Buttons) {
