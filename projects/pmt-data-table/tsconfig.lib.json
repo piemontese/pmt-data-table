@@ -28,8 +28,5 @@
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
-  ],
-  "files": [
-    "typings.d.ts"
   ]
 }

@@ -9,7 +9,6 @@ import { PmtDialogService } from 'pmt-dialog';
 import { PmtDataTableDetailService } from '../../../services/pmt-data-table-detail.service';
 import { PmtDataSourceService } from '../../../services/pmt-data-source.service';
 
-/*
 export interface Fields {
   name: string;
   type: string;
@@ -17,37 +16,8 @@ export interface Fields {
   value: string;
   color: string;
 }
-*/
 
-export class Fields {
-  name = '';
-  type = '';
-  placeholder = '';
-  value = '';
-  nameFrom = '';
-  nameTo = '';
-  valueFrom = '';
-  valueTo = '';
-  color = '';
-  range = 'false';
-  isTable = 'false';
-  row = '0';
-  bind = '';  // method to get data
-}
 
-/*
-export interface Buttons {
-  caption: string;
-  icon: string;      // search, edit, content_copy, add, delete
-  position: string;  // left, center, right
-  action: string;
-  color: string;     // primary, accent, warn
-  row: number;
-  tooltip: string;
-  disabled: boolean;
-  multiSel: boolean;
-}
-*/
 export interface Buttons {
   caption: string;
   icon: string;      // search, edit, content_copy, add, delete
@@ -60,18 +30,6 @@ export interface Buttons {
   multiSel: boolean;
 }
 
-/*
-export interface IconButtons {
-  icon: string;      // refresh, filter_list
-  position: string;  // left, center, right
-  action: string;
-  color: string;     // primary, accent, warn
-  row: number;
-  tooltip: string;
-  disabled: boolean;
-  multiSel: boolean;
-}
-*/
 export interface IconButtons {
   icon: string;      // refresh, filter_list
   position: string;  // left, center, right
