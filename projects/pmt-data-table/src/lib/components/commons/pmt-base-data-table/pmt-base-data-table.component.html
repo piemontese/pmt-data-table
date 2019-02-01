@@ -1,6 +1,6 @@
 <div class="example-container mat-elevation-z10">
 	<mat-toolbar> 
-		<mat-toolbar-row>
+		<mat-toolbar-row style="height: 6vh;">
 			{{title}}
 			<div fxLayout="row" fxFlex fxLayoutAlign="end">
 				<button mat-icon-button *ngIf="multiSelection"
@@ -26,7 +26,8 @@
 				</button>
 			</div>
 		</mat-toolbar-row> 
-		<mat-toolbar-row *ngIf="(buttons | row: 1).length > 0 || (iconButtons | row: 1).length > 0">
+		<mat-toolbar-row *ngIf="(buttons | row: 1).length > 0 || (iconButtons | row: 1).length > 0"
+										 style="height: 6vh; margin-bottom: 2vh;">
 			<button mat-button *ngFor="let button of buttons | position: 'left' | row: 1"
 												 (click)="buttonClick(button)"
 												 [matTooltip]="button.tooltip"
@@ -80,7 +81,8 @@
 				</button>
 			</div>
 		</mat-toolbar-row> 
-		<mat-toolbar-row *ngIf="fields.length > 0 || filter"> 
+		<mat-toolbar-row *ngIf="fields.length > 0 || filter"
+										 style="height: 5vh;"> 
 			<div fxLayout="row" fxFlex fxLayoutAlign="left">
 				<mat-form-field *ngFor="let field of fields; let i=index;"> 
 					<div *ngIf="field.type !== 'datePicker'">

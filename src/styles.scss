@@ -47,8 +47,10 @@ $config: mat-typography-config();
   @include mat-typography-level-to-styles($config, title);
 }
 
+/*
 .pmt-dialog-container { 
   mat-dialog-container {
     background-color: #ddffdd !important;
   }
 }
+*/
