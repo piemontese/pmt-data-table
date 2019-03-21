@@ -1,0 +1,17 @@
+	<lib-pmt-data-table color="primary"
+											title="User list" 
+											baseUrl="http://127.0.0.1:8001/sap/bc/webrfc"
+											method="TH_USER_LIST"
+											methodType = "F"
+											webrfcLog = "true"
+											webrfcLogin = "true"
+											webrfcUser = "user1"
+											webrfcPassword = "Ostrakon1!"
+											noRefreshColumns = "true"
+											table="USRLIST"
+											[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
+											[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
+																	 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
+											[iconButtons]="[ { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
+											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>

@@ -20,7 +20,7 @@ export class PmtDataTableDetailComponent implements OnInit {
   public buttons: Button[];
   public response: String = '';
   public routeTo: String = '';
-  public callback: Function = null;
+  public callback = null;  // : Function = null;
   public caller: any = null;
 
   constructor() {}
@@ -32,8 +32,10 @@ export class PmtDataTableDetailComponent implements OnInit {
   ngOnInit() {
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     if ( this.callback ) {
+      debugger;
       this.callback(this.response, this.fields, this.caller);
     }
   }

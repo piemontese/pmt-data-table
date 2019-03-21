@@ -6,10 +6,12 @@
 	 												 title="User list" 
 													 baseUrl="https://jsonplaceholder.typicode.com/users"
 													 dataType="json"
-													 type="GET"        								
+													 type="GET"
+													 multiSelection=true
 													 [buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
 																				{ caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
-													 [iconButtons]="[ { icon: 'refresh', position: 'right', action: 'refresh', color: 'prymary', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+											  	 [iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
+																					  { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
 													 [displayedColumns]="['name', 'email', 'phone', 'company']" 
 													 [displayedColumnsNames]="['Name', 'Email', 'Phone', 'Company']"> </lib-pmt-base-data-table>
 </div>
@@ -31,8 +33,9 @@
 											[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
 											[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
 																	 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
-											[iconButtons]="[ { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
-											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
+											[iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
+																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']"
 											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>
 </div>
 <div fxLayout="column" 
@@ -50,11 +53,13 @@
 											webrfcUser = "user1"
 											webrfcPassword = "Ostrakon1!"
 											noRefreshColumns = "true"
+											showMenu = false
 											table="USRLIST"
 											[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
 											[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
 																	 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
-											[iconButtons]="[ { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+											[iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
+																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
 											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
 											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>
 </div>
@@ -77,7 +82,8 @@
 											[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
 											[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
 																	 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
-											[iconButtons]="[ { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+											[iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
+																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
 											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
 											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>
 </div>
@@ -100,7 +106,33 @@
 											[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
 											[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
 																	 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
-											[iconButtons]="[ { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+											[iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
+																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
 											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
 											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>
+</div>
+
+<div fxLayout="column" 
+		 fxLayout.xs="column" 
+		 fxLayoutAlign="center center"
+		 style="margin: 2vh 1vw;">
+	<app-data-table style="width: 98%; min-width: 600px;" 
+											color="warn"
+											title="User list" 
+											baseUrl="http://127.0.0.1:8001/sap/bc/webrfc"
+											method="TH_USER_LIST"
+											methodType = "F"
+											webrfcLog = "true"
+											webrfcLogin = "true"
+											webrfcUser = "user1"
+											webrfcPassword = "Ostrakon1!"
+											noRefreshColumns = "true"
+											table="USRLIST"
+											[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
+											[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
+																	 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
+											[iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
+																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
+											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </app-data-table>
 </div>

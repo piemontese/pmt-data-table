@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
-import { BrowserModule, DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 // import { Observable } from 'rxjs';
@@ -12,11 +11,14 @@ import { PmtDataTableDetailService } from '../services/pmt-data-table-detail.ser
 import { PmtDataSourceService } from '../services/pmt-data-source.service';
 import { DateAdapter } from '@angular/material';
 
+
 import { PmtDialogService } from 'pmt-dialog';
 
 import { Fields } from './commons/pmt-base-data-table/pmt-base-data-table.component';
 import { Buttons } from './commons/pmt-base-data-table/pmt-base-data-table.component';
 import { IconButtons } from './commons/pmt-base-data-table/pmt-base-data-table.component';
+
+import { newRowsAnimation } from '../animations/table-row-animation';
 
 // import * as packageJson from '../../package.json';
 // const version = packageJson.default.version;
@@ -79,7 +81,8 @@ export interface IconButtons {
 @Component({
   selector: 'lib-pmt-data-table',
   templateUrl: './pmt-data-table.component.html',
-  styleUrls: ['./pmt-data-table.component.scss']
+  styleUrls: ['./pmt-data-table.component.scss'],
+  animations: [newRowsAnimation]
 })
 export class PmtDataTableComponent implements OnInit {
   appVersion;
@@ -103,6 +106,7 @@ export class PmtDataTableComponent implements OnInit {
   @Input() buttons: Buttons[] = [];
   @Input() iconButtons: IconButtons[] = [];
   @Input() multiSelection = false;
+  @Input() showMenu = true;
   @Input() baseUrl = 'http://127.0.0.1:8001/sap/bc/webrfc';
   // @Input() sapUser = 'developer';
   // @Input() sapPassword = 'Ostrakon1!';
@@ -163,7 +167,6 @@ export class PmtDataTableComponent implements OnInit {
     if (this.dataSource.data.filter(item => item.selected === true).length === 1) {
       for (let i = 0; i < this.dataSource.data.length; i++) {
         if (this.dataSource.data[i].selected) {
-          debugger;
           const rec = this.dataSource.data[i];
           const detailFields = [];
           for (const [key, value] of Object.entries(rec)) {
@@ -188,7 +191,6 @@ export class PmtDataTableComponent implements OnInit {
     if (this.dataSource.data.filter(item => item.selected === true).length === 1) {
       for (let i = 0; i < this.dataSource.data.length; i++) {
         if (this.dataSource.data[i].selected) {
-          debugger;
           const rec = this.dataSource.data[i];
           const detailFields = [];
           for (const [key, value] of Object.entries(rec)) {
@@ -215,7 +217,7 @@ export class PmtDataTableComponent implements OnInit {
     }
   }
 
-  private changedCallback(result: any, fields: any[], caller: PmtDataTableComponent) {
+  private changedCallback = (result: any, fields: any[], caller: PmtDataTableComponent) => {
     debugger;
     if (result === 'OK') {
       for (let i = 0; i < caller.dataSource.data.filter(item => item.selected === true).length; i++) {
@@ -248,7 +250,26 @@ export class PmtDataTableComponent implements OnInit {
     this.enableDisableButtons();
   }
 
-  public getData()/*: Observable<any[]>*/ {
+  public getResponse = () => /*: Observable<any[]>*/ {
+    debugger;
+    this.response = this.dataSourceService.getResponse();
+    const message = this.dataSourceService.getError();
+    if ( message.length > 0 ) {
+      this.dialogService.open(this.title,   // title
+            message,  // array of messages
+            'message',   // dialog type
+            'error',   // message type
+            [
+              {caption: 'Close', color: 'primary', close: true},
+              //                           { caption: "Cancel", color: "warn", close: true }
+            ]  // buttons
+          );
+    }
+    this.progress = false;
+    debugger;
+  }
+
+  public getData( )/*: Observable<any[]>*/ {
     const jsonData = {
       //      '_FUNCTION': this._FUNCTION,
       'callback': this.callback,
@@ -296,7 +317,6 @@ export class PmtDataTableComponent implements OnInit {
     }
 
  //   let inputData = [];
-    debugger;
     for (let i = 0; i < this.fields.length; i++) {
       let structure = [];
       if (this.fields[i].value !== '' || this.fields[i].valueFrom || this.fields[i].valueTo ) {
@@ -348,7 +368,6 @@ export class PmtDataTableComponent implements OnInit {
             if ( this.fields[i].isTable === 'true' ) {
               jsonDataValue = '[' + jsonDataValue + ']';
             }
-            debugger;
             for ( let ii = 1; ii < structure.length; ii++ ) {
               if ( !jsonData[structure[0]] /*|| jsonData[this.fields[ii].name].indexOf(structure[0]) <= 0*/ ) {
                 jsonData[this.fields[i].name] = '{' + structure[ii] + ':' + jsonDataValue + '}';
@@ -382,7 +401,6 @@ export class PmtDataTableComponent implements OnInit {
             if ( this.fields[i].isTable === 'true' ) {
               jsonDataValue = '[' + jsonDataValue + ']';
             }
-            debugger;
             for ( let ii = 1; ii < structure.length; ii++ ) {
               if ( !jsonData[structure[0]] /*|| jsonData[this.fields[ii].name].indexOf(structure[0]) <= 0*/ ) {
                 jsonData[this.fields[i].name] = '{' + structure[ii] + ':' + jsonDataValue + '}';
@@ -400,7 +418,6 @@ export class PmtDataTableComponent implements OnInit {
             this.fields[i].name += ':' + structure[ii];
           }
         } else {
-          debugger;
           let jsonDataValue = '';
           if (this.fields[i].valueFrom && !this.fields[i].valueTo) {
             if ( this.fields[i].valueFrom.indexOf('*') > 0 ) {
@@ -419,7 +436,6 @@ export class PmtDataTableComponent implements OnInit {
             if ( this.fields[i].isTable === 'true' ) {
               jsonDataValue = '[' + jsonDataValue + ']';
             }
-            debugger;
             for ( let ii = 1; ii < structure.length; ii++ ) {
               if ( !jsonData[structure[0]] /*|| jsonData[this.fields[ii].name].indexOf(structure[0]) <= 0*/ ) {
                 jsonData[this.fields[i].name] = '{' + structure[ii] + ':' + jsonDataValue + '}';
@@ -439,7 +455,6 @@ export class PmtDataTableComponent implements OnInit {
         }
       }
     }   // for (let i = 0; i < this.fields.length; i++) {
-    debugger;
     const so = this;
     this.progress = true;
 
@@ -464,6 +479,19 @@ export class PmtDataTableComponent implements OnInit {
       so.displayedColumnsNames = [];
     }
 
+debugger;
+    this. dataSourceService.call( this.baseUrl,
+                                  jsonData,
+                                  false,
+                                  'POST',
+                                  'jsonp',
+                                  'application/json',
+                                  true,
+                                  jsonData.callback,
+                                  60000, // sets timeout to 60 seconds
+                                  this.getResponse.bind(this)
+      ) ;
+
     jQuery.ajax({
       url: this.baseUrl,
       data: jsonData,
@@ -484,7 +512,6 @@ export class PmtDataTableComponent implements OnInit {
         }
 
 
-        debugger;
         so.response = data;
 
         if ( so.response.results[so.table] ) {
@@ -500,7 +527,7 @@ export class PmtDataTableComponent implements OnInit {
                 //                           { caption: "Cancel", color: "warn", close: true }
               ]  // buttons
             );
-            so.progress = false;
+//            so.progress = false;
             return;
           }
         }
@@ -510,14 +537,13 @@ export class PmtDataTableComponent implements OnInit {
         for (let m = 0; m < so.response.dictionary.length; m++) {
           const rec = so.response.dictionary[m];
           for (const [key, value] of Object.entries(rec)) {
-            let val: any = value;
+            const val: any = value;
             so.response.dictionary[m][key] = decodeURIComponent(val);
           }
         }
 
 
         const dictionary = so.response.dictionary;
-        debugger;
 
         // decode URI
         for (let m = 0; m < so.dataSource.data.length; m++) {
@@ -576,7 +602,8 @@ export class PmtDataTableComponent implements OnInit {
           }
         */
         }
-        so.progress = false;
+//        so.progress = false;
+        so.iconButtons.filter(item => item.icon === 'delete')[0].disabled = false;
       },
       error: function(data, status, error) {
         /*
@@ -584,7 +611,7 @@ export class PmtDataTableComponent implements OnInit {
         so.response['results'] = { 'USRLIST': [{'tid': '1', 'mandt': '', 'vbname': '', 'termv': '', 'hostaddr': ''}]  };
         so.dataSource.data = so.response.results['USRLIST'];
         */
-        so.progress = false;
+//        so.progress = false;
         so.dialogService.open(so.title,   // title
           ['Server unavailable'],  // array of messages
           'message',   // dialog type
@@ -612,9 +639,23 @@ export class PmtDataTableComponent implements OnInit {
       this.refreshColumns = 'true';
     }
     this.getData();
+    /*
+    if ( this.dataSource.data.length > 0 ) {
+      this.iconButtons.filter(item => item.icon === 'delete')[0].disabled = false;
+    }
+    */
   }
 
-  public showFilterClick() {
+  public delete() {
+    this.dataSource.data = [];
+debugger;
+    for ( let i = this.dataSource.data.length - 1; i >= 0; i-- ) {
+      this.dataSource.data.splice(i, 1);
+    }
+    this.iconButtons.filter(item => item.icon === 'delete')[0].disabled = true;
+  }
+
+ public showFilterClick() {
     this.showFilter = !this.showFilter;
   }
 
@@ -650,12 +691,17 @@ export class PmtDataTableComponent implements OnInit {
       }
       this.fieldsRows.sort( );
     }
+    if ( this.showMenu === true && !this.iconButtons.filter(item => item.icon === 'menu')[0] ) {
+      // tslint:disable-next-line:max-line-length
+      this.iconButtons.push( { icon: 'menu', position: 'right', action: 'menu', color: 'accent', row: 0, tooltip: 'Menu', disabled: false, multiSel: null } );
+    }
   }
 
   /**
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
    */
+  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

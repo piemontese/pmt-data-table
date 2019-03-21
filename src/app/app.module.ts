@@ -14,12 +14,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import 'jquery';
 
 import { PmtDataTableModule } from 'projects/pmt-data-table/src/lib/pmt-data-table.module';
+import { PmtDialogModule } from 'pmt-dialog';
 
 import { AppComponent } from './app.component';
+import { DataTableComponent } from './components/data-table/data-table.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import { AppComponent } from './app.component';
     MatDialogModule,
     MatDividerModule,
     FlexLayoutModule,
-    PmtDataTableModule
+    PmtDataTableModule,
+    PmtDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,6 +9,10 @@ import { PmtDialogService } from 'pmt-dialog';
 import { PmtDataTableDetailService } from '../../../services/pmt-data-table-detail.service';
 import { PmtDataSourceService } from '../../../services/pmt-data-source.service';
 
+import { PmtDataTableDirective } from '../../../directives/pmt-data-table.directive';
+
+import { newRowsAnimation } from '../../../animations/table-row-animation';
+
 /*
 export interface Fields {
   name: string;
@@ -86,7 +90,8 @@ export interface IconButtons {
 @Component({
   selector: 'lib-pmt-base-data-table',
   templateUrl: './pmt-base-data-table.component.html',
-  styleUrls: ['./pmt-base-data-table.component.scss']
+  styleUrls: ['./pmt-base-data-table.component.scss'],
+  animations: [newRowsAnimation]
 })
 export class PmtBaseDataTableComponent implements OnInit {
   @Input() title = 'Sample table';
@@ -104,6 +109,7 @@ export class PmtBaseDataTableComponent implements OnInit {
   @Input() buttons: Buttons[] = [];
   @Input() iconButtons: IconButtons[] = [];
   @Input() multiSelection = false;
+  @Input() dataLocal = [];
 
   dataSource: MatTableDataSource<any>;
   showFilter = true;
@@ -118,7 +124,10 @@ export class PmtBaseDataTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   // tslint:disable-next-line:max-line-length
-  constructor(public http: HttpClient, public dialogService: PmtDialogService, public dataTableDetailService: PmtDataTableDetailService, public dataSourceService: PmtDataSourceService) {
+  constructor(public http: HttpClient,
+              public dialogService: PmtDialogService,
+              public dataTableDetailService: PmtDataTableDetailService,
+              public dataSourceService: PmtDataSourceService) {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -149,7 +158,6 @@ export class PmtBaseDataTableComponent implements OnInit {
     if (this.dataSource.data.filter(item => item.selected === true).length === 1) {
       for (let i = 0; i < this.dataSource.data.length; i++) {
         if (this.dataSource.data[i].selected) {
-          debugger;
           const rec = this.dataSource.data[i];
           const detailFields = [];
           for (const [key, value] of Object.entries(rec)) {
@@ -174,7 +182,6 @@ export class PmtBaseDataTableComponent implements OnInit {
     if (this.dataSource.data.filter(item => item.selected === true).length === 1) {
       for (let i = 0; i < this.dataSource.data.length; i++) {
         if (this.dataSource.data[i].selected) {
-          debugger;
           const rec = this.dataSource.data[i];
           const detailFields = [];
           for (const [key, value] of Object.entries(rec)) {
@@ -186,7 +193,7 @@ export class PmtBaseDataTableComponent implements OnInit {
             }
           }
           this.dataTableDetailService.data = this.dataSource.data;
-          let caller = this;
+          const caller = this;
           this.dataTableDetailService.open(this.title + ' change item',   // title
             'edit',                   // mode
             detailFields,
@@ -203,7 +210,6 @@ export class PmtBaseDataTableComponent implements OnInit {
   }
 
   private changedCallback(result: any, fields: any[], caller: PmtBaseDataTableComponent) {
-    debugger;
     if (result === 'OK') {
       for (let i = 0; i < caller.dataSource.data.filter(item => item.selected === true).length; i++) {
         //      for (let i = 0; i < this.dataSource.data.length; i++) {
@@ -241,7 +247,7 @@ export class PmtBaseDataTableComponent implements OnInit {
         if ( this.fields[i].type === 'datePicker' ) {
           const date = new Date(this.fields[i].value);
           this.jsonData[this.fields[i].name] = date.getFullYear().toString() +
-                        ( date.getMonth() < 9 ? '0' + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString() ) + 
+                        ( date.getMonth() < 9 ? '0' + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString() ) +
                         ( date.getDate() < 10 ? '0' + date.getDate() : date.getDate() ).toString();
         } else {
           this.jsonData[this.fields[i].name] = this.fields[i].value;
@@ -252,7 +258,6 @@ export class PmtBaseDataTableComponent implements OnInit {
     const so = this;
     this.progress = true;
 
-    debugger;
     switch (this.type.toLowerCase()) {
       case 'get': {
         this.http.get(this.baseUrl).subscribe(data => {
@@ -280,7 +285,7 @@ export class PmtBaseDataTableComponent implements OnInit {
       return this.http.get(apiURL)
           .map(res => {
             return res.json().results.map(item => {
-              return new SearchItem( 
+              return new SearchItem(
                   item.trackName,
                   item.artistName,
                   item.trackViewUrl,
@@ -312,7 +317,6 @@ export class PmtBaseDataTableComponent implements OnInit {
             }
 
             so.response = data;
-            debugger;
             if (so.response.results) {
               so.dataSource.data = so.response.results[so.table];
             }
@@ -321,21 +325,20 @@ export class PmtBaseDataTableComponent implements OnInit {
             for (let m = 0; m < so.dataSource.data.length; m++) {
               const rec = so.dataSource.data[m];
               for (const [key, value] of Object.entries(rec)) {
-                let val: any = value;
+                const val: any = value;
                 so.dataSource.data[m][key] = decodeURIComponent(val);
               }
             }
 
             if (so.displayedColumns.length === 0) {
               i = 0;
-              debugger;
               const rec = so.dataSource.data[0];
               for (const [key, value] of Object.entries(rec)) {
                 so.displayedColumns[i] = key;
                 so.displayedColumnsNames[i] = key;
                 i++;
               }
-							/*
+              /*
 							for ( const item of rec ) {
 								so.displayedColumns[i] = item;
 								so.displayedColumnsNames[i] = item;
@@ -346,7 +349,7 @@ export class PmtBaseDataTableComponent implements OnInit {
             so.progress = false;
           },
           error: function(data, status, error) {
-						/*
+            /*
 						so.response = [];
 						so.response['results'] = { 'USRLIST': [{'tid': '1', 'mandt': '', 'vbname': '', 'termv': '', 'hostaddr': ''}]  };
 						so.dataSource.data = so.response.results['USRLIST'];
@@ -354,8 +357,8 @@ export class PmtBaseDataTableComponent implements OnInit {
             so.progress = false;
             so.dialogService.open(so.title,   // title
               ['Server unavailable'],  // array of messages
-              'message',   // dialog type
-              'error',   // message type
+               'message',   // dialog type
+               'error',   // message type
               [
                 {caption: 'Close', color: 'primary', close: true},
                 //                           { caption: "Cancel", color: "warn", close: true }
@@ -363,7 +366,7 @@ export class PmtBaseDataTableComponent implements OnInit {
             );
           }
         });
-				/*
+        /*
 				.catch( function(e) {
 					 debugger;
 					 if ( e.statusText === 'timeout') {
@@ -376,8 +379,8 @@ export class PmtBaseDataTableComponent implements OnInit {
       default: {
         so.dialogService.open(so.title,   // title
           ['type ' + this.type + ' invalid.'],  // array of messages
-          'message',   // dialog type
-          'error',   // message type
+           'message',   // dialog type
+           'error',   // message type
           [
             {caption: 'Close', color: 'primary', close: true},
             //                           { caption: "Cancel", color: "warn", close: true }
@@ -393,6 +396,12 @@ export class PmtBaseDataTableComponent implements OnInit {
 
   public refresh() {
     this.getData();
+    this.iconButtons.filter(item => item.icon === 'delete')[0].disabled = false;
+  }
+
+  public delete() {
+    this.dataSource.data = [];
+    this.iconButtons.filter(item => item.icon === 'delete')[0].disabled = true;
   }
 
   public showFilterClick() {
@@ -425,6 +434,7 @@ export class PmtBaseDataTableComponent implements OnInit {
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
    */
+  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

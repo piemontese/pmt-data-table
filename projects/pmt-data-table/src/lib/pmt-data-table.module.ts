@@ -36,6 +36,7 @@ import { PmtPositionPipe } from './pipes/pmt-position.pipe';
 import { PmtRowPipe } from './pipes/pmt-row.pipe';
 
 import { PmtDialogModule } from 'pmt-dialog';
+import { PmtDataTableDirective } from './directives/pmt-data-table.directive';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { PmtDialogModule } from 'pmt-dialog';
     PmtDataTableComponent,
     PmtDataTableDetailComponent,
     PmtPositionPipe,
-    PmtRowPipe
+    PmtRowPipe,
+    PmtDataTableDirective
   ],
   exports: [
     PmtBaseDataTableComponent,

@@ -127,6 +127,7 @@
 										class="example-header-row">
 		</mat-header-row> 
 		<mat-row *matRowDef="let row; columns: displayedColumns;" 
+						 [@newRowsAnimation]=""
 						 class="example-row"
 						 [ngClass]="{'selected-row': row.selected===true}"
 						 (click)="selectItem(row)"></mat-row>
@@ -137,3 +138,4 @@
 		[pageSizeOptions]="[5, 10, 25, 50, 100]"> </mat-paginator>
 
 </div>
+

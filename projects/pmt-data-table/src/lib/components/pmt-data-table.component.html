@@ -1,3 +1,4 @@
+<div libPmtDataTable>
 <div class="example-container mat-elevation-z10">
 	<mat-toolbar [color]="color"
 							 class="mat-elevation-z10"> 
@@ -7,7 +8,7 @@
 				<button mat-icon-button *ngIf="multiSelection"
 										(click)="selectAll()"
 										matTooltip="Select/deselect all"
-										color="primar">
+										color="primary">
 					<mat-icon color="primary">select_all</mat-icon>
 				</button>
 				<button mat-button *ngFor="let button of buttons | position: 'right' | row: 0"
@@ -25,6 +26,14 @@
 											color="iconButton.color">
 					<mat-icon [color]="iconButton.disabled ? '' : 'iconButton.color'">{{iconButton.icon}}</mat-icon>
 				</button>
+				<!--
+				<button mat-icon-button *ngIf="menu"
+										(click)="selectAll()"
+										matTooltip="Menu"
+										color="accent">
+					<mat-icon color="primary">menu</mat-icon>
+				</button>
+				-->
 			</div>
 		</mat-toolbar-row> 
 		<mat-toolbar-row *ngIf="(buttons | row: 1).length > 0 || (iconButtons | row: 1).length > 0"
@@ -217,6 +226,7 @@
 						class="example-header-row">
 		</mat-header-row> 
 		<mat-row *matRowDef="let row; columns: displayedColumns;" 
+						 [@newRowsAnimation]=""
 						 class="example-row"
 						 [ngClass]="{'selected-row': row.selected===true}"
 						 (click)="selectItem(row)"></mat-row>
@@ -227,4 +237,5 @@
 								 [pageIndex]="0" [pageSize]="25"
 								 [pageSizeOptions]="[5, 10, 25, 50, 100]"> </mat-paginator>
 
+</div>
 </div>

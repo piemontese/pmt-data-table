@@ -24,7 +24,7 @@ export class PmtDataTableDetailService {
                mode: string,
                fields: any[],
                buttons: Button[],
-               callback: Function = null,
+               callback = null,  // Function = null,
                caller: any = null,
                routeTo: string = '' ) {
 //    let dialogRef: MatDialogRef<DialogComponent>;
@@ -46,13 +46,13 @@ export class PmtDataTableDetailService {
 
 //    return dialogRef.afterClosed();
 
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(_result => {
       /*
       this.response = this.dialogRef.componentInstance.response;
       if ( routeTo !== '' ) {
         this.router.navigate([routeTo]);
       }
-			*/
+      */
     });
   }
 
