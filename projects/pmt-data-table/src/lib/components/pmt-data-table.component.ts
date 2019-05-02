@@ -9,74 +9,18 @@ import { MatIconRegistry } from '@angular/material';
 
 import { PmtDataTableDetailService } from '../services/pmt-data-table-detail.service';
 import { PmtDataSourceService } from '../services/pmt-data-source.service';
-import { DateAdapter } from '@angular/material';
-
-
 import { PmtDialogService } from 'pmt-dialog';
 
 import { Fields } from './commons/pmt-base-data-table/pmt-base-data-table.component';
 import { Buttons } from './commons/pmt-base-data-table/pmt-base-data-table.component';
 import { IconButtons } from './commons/pmt-base-data-table/pmt-base-data-table.component';
 
+import { DateAdapter } from '@angular/material';
+
 import { newRowsAnimation } from '../animations/table-row-animation';
 
 // import * as packageJson from '../../package.json';
 // const version = packageJson.default.version;
-
-/*
-export interface Fields {
-  name: string;
-  type: string;
-  placeholder: string;
-  value: string;
-  valueFrom: string;
-  valueTo: string;
-  color: string;
-  range: string;
-  isTable: string;
-  bind: string;
-}
-*/
-/*
-export class Fields {
-  name = '';
-  type = '';
-  placeholder = '';
-  value = '';
-  nameFrom = '';
-  nameTo = '';
-  valueFrom = '';
-  valueTo = '';
-  color = '';
-  range = 'false';
-  isTable = 'false';
-  row = '0';
-  bind = '';  // method to get data
-}*/
-/*
-export interface Buttons {
-  caption: string;
-  icon: string;      // search, edit, content_copy, add, delete
-  position: string;  // left, center, right
-  action: string;
-  color: string;     // primary, accent, warn
-  row: number;
-  tooltip: string;
-  disabled: boolean;
-  multiSel: boolean;
-}
-
-export interface IconButtons {
-  icon: string;      // refresh, filter_list
-  position: string;  // left, center, right
-  action: string;
-  color: string;     // primary, accent, warn
-  row: number;
-  tooltip: string;
-  disabled: boolean;
-  multiSel: boolean;
-}
-*/
 
 @Component({
   selector: 'lib-pmt-data-table',
@@ -124,13 +68,14 @@ export class PmtDataTableComponent implements OnInit {
   selectedItems: number[];
   currentDate = new FormControl(new Date());
   fieldsRows = [];
+  dataSourceService = new PmtDataSourceService
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public dialogService: PmtDialogService,
               public dataTableDetailService: PmtDataTableDetailService,
-              public dataSourceService: PmtDataSourceService,
+//              public dataSourceService: PmtDataSourceService,
               private dateAdapter: DateAdapter<Date>,
               private sanitizer: DomSanitizer,
               iconRegistry: MatIconRegistry ) {
@@ -218,7 +163,6 @@ export class PmtDataTableComponent implements OnInit {
   }
 
   private changedCallback = (result: any, fields: any[], caller: PmtDataTableComponent) => {
-    debugger;
     if (result === 'OK') {
       for (let i = 0; i < caller.dataSource.data.filter(item => item.selected === true).length; i++) {
         //      for (let i = 0; i < this.dataSource.data.length; i++) {
@@ -251,12 +195,19 @@ export class PmtDataTableComponent implements OnInit {
   }
 
   public getResponse = () => /*: Observable<any[]>*/ {
-    debugger;
     this.response = this.dataSourceService.getResponse();
-    const message = this.dataSourceService.getError();
-    if ( message.length > 0 ) {
+    if ( this.dataSourceService.getSuccess()  ) {
+        this.displayedColumnsNames = this.dataSourceService.getNode(this.table)['columnsNames'];
+        this.dataSource.data = this.dataSourceService.getNode(this.table)['data'];
+        this.iconButtons.filter(item => item.icon === 'delete')[0].disabled = false;
+    } else {
+      const msg = [];
+      const errors = this.dataSourceService.getError();
+      for ( let i = 0; i < errors.length;  i++ ) {
+        msg.push(errors[i].msg);
+      }
       this.dialogService.open(this.title,   // title
-            message,  // array of messages
+            msg,  // array of messages
             'message',   // dialog type
             'error',   // message type
             [
@@ -266,7 +217,6 @@ export class PmtDataTableComponent implements OnInit {
           );
     }
     this.progress = false;
-    debugger;
   }
 
   public getData( )/*: Observable<any[]>*/ {
@@ -479,7 +429,6 @@ export class PmtDataTableComponent implements OnInit {
       so.displayedColumnsNames = [];
     }
 
-debugger;
     this. dataSourceService.call( this.baseUrl,
                                   jsonData,
                                   false,
@@ -489,149 +438,11 @@ debugger;
                                   true,
                                   jsonData.callback,
                                   60000, // sets timeout to 60 seconds
-                                  this.getResponse.bind(this)
+                                  this.getResponse.bind(this),
+                                  this.displayedColumns,
+                                  this.displayedColumnsNames
       ) ;
-
-    jQuery.ajax({
-      url: this.baseUrl,
-      data: jsonData,
-      async: false,
-      type: 'POST',
-      dataType: 'jsonp',
-      contentType: 'application/json',
-      crossDomain: true,
-      jsonpCallback: jsonData.callback,
-      timeout: 60000, // sets timeout to 60 seconds
-      success: function(data) {
-        let i = 0;
-        for (const item of so.displayedColumns) {
-          if (!so.displayedColumnsNames[i] || so.displayedColumnsNames[i] === '') {
-            so.displayedColumnsNames[i] = item;
-          }
-          i++;
-        }
-
-
-        so.response = data;
-
-        if ( so.response.results[so.table] ) {
-          so.dataSource.data = so.response.results[so.table];
-        } else {
-          if ( so.response.errors.length > 0 ) {
-            so.dialogService.open(so.title,   // title
-              [ so.response.errors[0].msg ],  // array of messages
-              'message',   // dialog type
-              'error',   // message type
-              [
-                {caption: 'Close', color: 'primary', close: true},
-                //                           { caption: "Cancel", color: "warn", close: true }
-              ]  // buttons
-            );
-//            so.progress = false;
-            return;
-          }
-        }
-
-
-        // decode URI
-        for (let m = 0; m < so.response.dictionary.length; m++) {
-          const rec = so.response.dictionary[m];
-          for (const [key, value] of Object.entries(rec)) {
-            const val: any = value;
-            so.response.dictionary[m][key] = decodeURIComponent(val);
-          }
-        }
-
-
-        const dictionary = so.response.dictionary;
-
-        // decode URI
-        for (let m = 0; m < so.dataSource.data.length; m++) {
-          const rec = so.dataSource.data[m];
-          for (const [key, value] of Object.entries(rec)) {
-            const val: any = value;
-            so.dataSource.data[m][key] = decodeURIComponent(val);
-          }
-        }
-
-        if ( so.dataSource.data.length > 0 ) {
-          // if no specified displayed columns is set by code
-          if (so.displayedColumnsNames.length === 0) {
-            i = 0;
-            const rec = so.dataSource.data[0];
-            for (const [key, value] of Object.entries(rec)) {
-              so.displayedColumns[i] = key;
-              if ( !so.response.dictionary.filter(item => item.name === key)[0] ) {
-                so.displayedColumnsNames[i] = key;
-              } else  {
-                so.displayedColumnsNames[i] = so.response.dictionary.filter(item => item.name === key)[0].smallDescr;
-              }
-              i++;
-            }
-          }
-          /*
-          so.displayedColumnsNames = [];
-          debugger;
-          const rec = so.dataSource.data[0];
-          i = 0;
-          // build mat-table rows
-          if (so.displayedColumnsNames.length === 0) {
-            for (const [key, value] of Object.entries(rec)) {
-              const rec2 = so.response.dictionary.filter(item => item.name === key)[0];
-              for (const [key2, value2] of Object.entries(rec2)) {
-                if (key2 === 'small_descr') {
-                  // check if the extracted columns is in dyplayed columns array"
-                  if ( so.displayedColumns.filter(item => item === key)[0] ) {
-                    // put value in correct column
-                    for (let j = 0; j < so.displayedColumns.length; j++ ) {
-                      if ( so.displayedColumns[j] === key ) {
-                        i = j;
-                        break;
-                      }
-                    }
-                    if (value2 !== '') {
-                      so.displayedColumnsNames[i] = value2;
-                    } else {
-                      so.displayedColumnsNames[i] = so.response.dictionary[i].name.replace('"', '').replace('"', '');
-                    }
-                    i++;
-                  }
-                }
-              }
-            }
-          }
-        */
-        }
-//        so.progress = false;
-        so.iconButtons.filter(item => item.icon === 'delete')[0].disabled = false;
-      },
-      error: function(data, status, error) {
-        /*
-        so.response = [];
-        so.response['results'] = { 'USRLIST': [{'tid': '1', 'mandt': '', 'vbname': '', 'termv': '', 'hostaddr': ''}]  };
-        so.dataSource.data = so.response.results['USRLIST'];
-        */
-//        so.progress = false;
-        so.dialogService.open(so.title,   // title
-          ['Server unavailable'],  // array of messages
-          'message',   // dialog type
-          'error',   // message type
-          [
-            {caption: 'Close', color: 'primary', close: true},
-            //                           { caption: "Cancel", color: "warn", close: true }
-          ]  // buttons
-        );
-      }
-    });
-    /*
-    .catch( function(e) {
-       debugger;
-       if ( e.statusText === 'timeout') {
-         alert('Native Promise: Failed from timeout');
-       }
-     });
-     * */
-  }
+  }   // public getData( )
 
 
   public refresh() {
@@ -648,7 +459,6 @@ debugger;
 
   public delete() {
     this.dataSource.data = [];
-debugger;
     for ( let i = this.dataSource.data.length - 1; i >= 0; i-- ) {
       this.dataSource.data.splice(i, 1);
     }

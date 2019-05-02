@@ -22,12 +22,6 @@
       ],
       "pmt-data-table/*": [
         "dist/pmt-data-table/*"
-      ],
-      "ptm-data-table": [
-        "dist/ptm-data-table"
-      ],
-      "ptm-data-table/*": [
-        "dist/ptm-data-table/*"
       ]
     }
   }

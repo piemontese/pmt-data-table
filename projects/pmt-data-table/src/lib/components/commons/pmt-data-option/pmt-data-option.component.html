@@ -1,0 +1,40 @@
+<!-- 
+<mat-form-field class="example-full-width">
+    <mat-label>{{placeholder}}</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let dat of data" [value]="data">
+            <div *ngIf="listLayout === 'row'" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                <div class="pmt-option-key">{{dat.key}}</div>
+                <div class="pmt-option-name">{{dat.name}}</div>
+            </div>
+            <div *ngIf="listLayout === 'column'" fxLayout="column">
+                <div class="pmt-option-key">{{dat.key}}</div>
+                <div class="pmt-option-name" style="margin-top: -25px;">{{dat.name}}</div>
+            </div>
+            <div *ngIf="listLayout === 'table'" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px grid">
+                <div fxFlex="40%" class="pmt-option-key">{{dat.key}}</div>
+                <div fxFlex="60%" class="pmt-option-name">{{dat.name}}</div>
+            </div>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+ -->
+<mat-form-field class="example-full-width" (mouseup)="bind()">
+    <mat-label>{{placeholder}}</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let dat of dataValues; let i=index;" [value]="dataValues">
+            <div *ngIf="listLayout === 'row'" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                <div class="pmt-option-key">{{data[i].name}}</div>
+                <!-- <div class="pmt-option-name">{{data[i].name}}</div> -->
+            </div>
+            <div *ngIf="listLayout === 'column'" fxLayout="column">
+                <div class="pmt-option-key">{{data[i].name}}</div>
+                <!-- <div class="pmt-option-name" style="margin-top: -25px;">{{data[i].name}}</div> -->
+            </div>
+            <div *ngIf="listLayout === 'table'" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px grid">
+                <div fxFlex="40%" class="pmt-option-key">{{data[i].name}}</div>
+                <!-- <div fxFlex="60%" class="pmt-option-name">{{data[i].name}}</div> -->
+            </div>
+        </mat-option>
+    </mat-select>
+</mat-form-field>

@@ -1,0 +1,21 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text" [placeholder]="placeholder" aria-label="Number" matInput [formControl]="control" [matAutocomplete]="auto" (mouseup)="bind()">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" [panelWidth]="listWidth">
+      <mat-option *ngFor="let data of filteredData | async" [value]="data">
+        <div *ngIf="listLayout === 'row'" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <div class="pmt-option-key">{{data.key}}</div>
+            <div class="pmt-option-name">{{data.name}}</div>
+        </div>
+        <div *ngIf="listLayout === 'column'" fxLayout="column">
+            <div class="pmt-option-key">{{data.key}}</div>
+            <div class="pmt-option-name" style="margin-top: -30px;">{{data.name}}</div>
+        </div>
+        <div *ngIf="listLayout === 'table'" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px grid">
+            <div fxFlex="40%" class="pmt-option-key">{{data.key}}</div>
+            <div fxFlex="60%" class="pmt-option-name">{{data.name}}</div>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

@@ -20,6 +20,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
+import { MatAutocompleteModule  } from '@angular/material/autocomplete';
 
 import 'hammerjs';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -37,6 +38,8 @@ import { PmtRowPipe } from './pipes/pmt-row.pipe';
 
 import { PmtDialogModule } from 'pmt-dialog';
 import { PmtDataTableDirective } from './directives/pmt-data-table.directive';
+import { PmtDataOptionComponent } from './components/commons/pmt-data-option/pmt-data-option.component';
+import { PmtDataAutocompleteComponent } from './components/commons/pmt-data-autocomplete/pmt-data-autocomplete.component';
 
 @NgModule({
   imports: [
@@ -59,6 +62,7 @@ import { PmtDataTableDirective } from './directives/pmt-data-table.directive';
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
     FlexLayoutModule,
     PmtDataTableRoutingModule,
     PmtDialogModule,
@@ -69,14 +73,18 @@ import { PmtDataTableDirective } from './directives/pmt-data-table.directive';
     PmtDataTableDetailComponent,
     PmtPositionPipe,
     PmtRowPipe,
-    PmtDataTableDirective
+    PmtDataTableDirective,
+    PmtDataOptionComponent,
+    PmtDataAutocompleteComponent
   ],
   exports: [
     PmtBaseDataTableComponent,
     PmtDataTableComponent,
     PmtDataTableDetailComponent,
     PmtPositionPipe,
-    PmtRowPipe
+    PmtRowPipe,
+    PmtDataOptionComponent,
+    PmtDataAutocompleteComponent
   ],
   providers: [
     PmtDataTableDetailService,

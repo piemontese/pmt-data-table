@@ -35,7 +35,6 @@ export class PmtDataTableDetailComponent implements OnInit {
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     if ( this.callback ) {
-      debugger;
       this.callback(this.response, this.fields, this.caller);
     }
   }

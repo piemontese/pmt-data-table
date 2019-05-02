@@ -1,5 +1,43 @@
-<button mat-raised-button>PmtDataTable</button>
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px grid">
+<lib-pmt-data-autocomplete sqlTable="ZPMT_WRFC_USERS"
+													 placeholder="Webrfc user"
+													 [baseUrl]="configuration.url"
+													 [listWidth]="300"
+													 listLayout="row"
+                           [displayedColumns]="['usr', 'fullName']"></lib-pmt-data-autocomplete>
+<lib-pmt-data-autocomplete sqlTable="TFTIT"
+													 sqlWhere="spras = 'EN' and funcname like 'Z%'"
+						   						 placeholder="Function"
+													 [baseUrl]="configuration.url"
+													 [listWidth]="800"
+													 listLayout="table"
+													 [displayedColumns]="['funcname', 'stext']"></lib-pmt-data-autocomplete>
+<lib-pmt-data-autocomplete sqlTable="TFTIT"
+													 sqlWhere="spras = 'EN' and funcname like 'Z_PMT%'"
+													 placeholder="Function"
+													 [baseUrl]="configuration.url"
+						   						 [listWidth]="400"
+													 listLayout="column"
+													 [displayedColumns]="['funcname', 'stext']"></lib-pmt-data-autocomplete>
 
+<lib-pmt-data-option [data]="[ { key: '1000', name: 'Milan' },
+															 { key: '2000', name: 'Rome'} ,
+															 { key: '3000', name: 'Naples' },
+															 { key: '4000', name: 'Florence' },
+															 { key: '5000', name: 'Turin' } ]"
+										 placeholder="Plant"
+						   			 [listWidth]="300"
+										 listLayout="table"
+					 					 [displayedColumns]="['usr', 'fullName']"></lib-pmt-data-option>
+<lib-pmt-data-option sqlTable="TFTIT"
+										 sqlWhere="spras = 'EN' and funcname like 'Z_PMT%'"
+										 placeholder="Function"
+										 [baseUrl]="configuration.url"
+						   			 [listWidth]="300"
+										 listLayout="column"
+					 					 [displayedColumns]="['funcname', 'stext']"></lib-pmt-data-option>
+</div>
+ 
 <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center"
 		 style="margin: 2vh 1vw;">
   <lib-pmt-base-data-table style="width: 100%; min-width: 600px;" 
@@ -21,13 +59,13 @@
 		 style="margin: 2vh 1vw;">
 	<lib-pmt-data-table style="width: 98%; min-width: 600px;" 
 											title="User list" 
-											baseUrl="http://127.0.0.1:8001/sap/bc/webrfc"
+ 										  [baseUrl]="configuration.url"
 											method="TH_USER_LIST"
 											methodType = "F"
 											webrfcLog = "true"
 											webrfcLogin = "true"
 											webrfcUser = "user1"
-											webrfcPassword = "Ostrakon1!"
+											webrfcPassword = "Ostrakon1!x"
 											noRefreshColumns = "true"
 											table="USRLIST"
 											[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
@@ -45,7 +83,7 @@
 	<lib-pmt-data-table style="width: 98%; min-width: 600px;" 
 											color="primary"
 											title="User list" 
-											baseUrl="http://127.0.0.1:8001/sap/bc/webrfc"
+ 										  [baseUrl]="configuration.url"
 											method="TH_USER_LIST"
 											methodType = "F"
 											webrfcLog = "true"
@@ -70,7 +108,7 @@
 	<lib-pmt-data-table style="width: 98%; min-width: 600px;" 
 											color="accent"
 											title="User list" 
-											baseUrl="http://127.0.0.1:8001/sap/bc/webrfc"
+ 										  [baseUrl]="configuration.url"
 											method="TH_USER_LIST"
 											methodType = "F"
 											webrfcLog = "true"
@@ -94,7 +132,7 @@
 	<lib-pmt-data-table style="width: 98%; min-width: 600px;" 
 											color="warn"
 											title="User list" 
-											baseUrl="http://127.0.0.1:8001/sap/bc/webrfc"
+ 										  [baseUrl]="configuration.url"
 											method="TH_USER_LIST"
 											methodType = "F"
 											webrfcLog = "true"
@@ -119,7 +157,7 @@
 	<app-data-table style="width: 98%; min-width: 600px;" 
 											color="warn"
 											title="User list" 
-											baseUrl="http://127.0.0.1:8001/sap/bc/webrfc"
+											[baseUrl]="configuration.url"
 											method="TH_USER_LIST"
 											methodType = "F"
 											webrfcLog = "true"
