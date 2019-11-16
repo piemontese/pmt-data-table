@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // import * as configuration from './configuration.json';
-import { Configuration } from './configuration';
+import { Config } from './configuration';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,5 @@ import { Configuration } from './configuration';
 })
 export class AppComponent {
   title = 'app';
-  configuration = new Configuration;  // configuration;
-
+  configuration = new Config;  // configuration;
 }

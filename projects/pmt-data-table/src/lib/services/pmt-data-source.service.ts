@@ -20,6 +20,7 @@ export class PmtDataSourceService {
   private errors = [];
   private informations = [];
   private warnings = [];
+  private reloadColumns = false;
   subscription: Subscription;
 
   public constructor ( /*private httpClient: HttpClient */ ) {
@@ -36,10 +37,13 @@ export class PmtDataSourceService {
                timeout: number, // sets timeout to 60 seconds
                callback,
                columns: Array<string>,
-               columnsNames: Array<string> ) {
+               columnsNames: Array<string>,
+               reloadColumns: boolean = false  ) {
     this.response = [];
+    this.data = [];
     this.columns = columns;
     this.columnsNames = columnsNames;
+    this.reloadColumns = reloadColumns;
     this.error = '';
     const so = this;
 
@@ -87,7 +91,8 @@ export class PmtDataSourceService {
                timeout: number, // sets timeout to 60 seconds
                callback,
                columns: Array<string>,
-               columnsNames: Array<string> )/*:  Observable<any> */ {
+               columnsNames: Array<string>,
+               reloadColumns: boolean = false  )/*:  Observable<any> */ {
     this.response = [];
     this.columns = columns;
     this.columnsNames = columnsNames;
@@ -119,10 +124,11 @@ export class PmtDataSourceService {
     return this.errors;
   }
 
-  public getNode( node: string) {
-    if ( this.data.length === 0 ) {
+  public getNode( node: string ) {
+//    if ( this.data.length === 0 ) {
       let i = 0;
-      if ( this.columnsNames.length === 0 ) {
+//      if ( this.columnsNames.length === 0 ) {
+      if ( this.reloadColumns ) {
         for (const item of this.columns) {
           if (!this.columnsNames[i] || this.columnsNames[i] === '') {
             this.columnsNames[i] = item;
@@ -173,7 +179,8 @@ export class PmtDataSourceService {
 
       if ( this.data.length > 0 ) {
         // if no specified displayed columns is set by code
-        if (this.columnsNames.length === 0) {
+//        if (this.columnsNames.length === 0) {
+        if (this.reloadColumns) {
           i = 0;
           const rec = this.data[0];
           for (const [key, value] of Object.entries(rec)) {
@@ -187,8 +194,7 @@ export class PmtDataSourceService {
           }
         }
       }
-    }   // if ( this.data.length === 0 )
-
+//    }   // if ( this.data.length === 0 )
     const arrayRet = [];
     arrayRet['columns'] = this.columns;
     arrayRet['columnsNames'] = this.columnsNames;

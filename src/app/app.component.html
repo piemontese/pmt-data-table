@@ -63,7 +63,7 @@
 											method="TH_USER_LIST"
 											methodType = "F"
 											webrfcLog = "true"
-											webrfcLogin = "true"
+											webrfcLogin = "false"
 											webrfcUser = "user1"
 											webrfcPassword = "Ostrakon1!x"
 											noRefreshColumns = "true"
@@ -75,6 +75,37 @@
 																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
 											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']"
 											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>
+	<lib-pmt-data-table style="width: 98%; min-width: 600px;" 
+											title="User list" 
+ 										  [baseUrl]="configuration.url"
+											method="TH_USER_LIST"
+											methodType = "F"
+											webrfcLog = "true"
+											webrfcLogin = "false"
+											webrfcUser = "user1"
+											webrfcPassword = "Ostrakon1!x"
+											noRefreshColumns = "false"
+											table="USRLIST"
+											[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
+											[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
+																	 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
+											[iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
+																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']"
+											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>
+        		<lib-pmt-data-table style="width: 98%; min-width: 600px;" 
+        				[filter]="false"
+							  [baseUrl]="configuration.url"
+        				[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false } ]"
+        				[fields]="[ { name: 'sap-language', value:'EN', type: 'select', placeholder: 'Language' }	]"
+        				[iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
+														     { icon: 'refresh', position: 'right', action: 'refresh', color: 'prymary', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
+        				method="TH_USER_LIST"
+								methodType = "F"
+ 								table="USRLIST"
+								[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
+								[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"
+ 								title="User list"></lib-pmt-data-table>
 </div>
 <div fxLayout="column" 
 		 fxLayout.xs="column" 
@@ -97,9 +128,7 @@
 											[buttons]="[ { caption:'View', icon: 'search', position: 'left', action: 'view', color: 'prymary', row: 1, tooltip: 'View item', disabled: true, multiSel: false },
 																	 { caption:'Change', icon: 'edit', position: 'left', action: 'change', color: 'prymary', row: 1, tooltip: 'Change item', disabled: true, multiSel: false } ]"
 											[iconButtons]="[ { icon: 'delete', position: 'right', action: 'delete', color: 'accent', row: 0, tooltip: 'Delete data data', disabled: true, multiSel: null },
-																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"
-											[displayedColumns]="['tid', 'mandt', 'bname', 'term', 'hostaddr', 'guiversion', 'zeit']" 
-											[displayedColumnsNames]="['TID', 'Client', 'User', 'Terminal', 'IP address', 'GUI version', 'Time']"> </lib-pmt-data-table>
+																			 { icon: 'refresh', position: 'right', action: 'refresh', color: 'accent', row: 0, tooltip: 'Refresh data', disabled: false, multiSel: null } ]"></lib-pmt-data-table>
 </div>
 <div fxLayout="column" 
 		 fxLayout.xs="column" 

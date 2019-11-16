@@ -19,6 +19,14 @@ import { DateAdapter } from '@angular/material';
 
 import { newRowsAnimation } from '../animations/table-row-animation';
 
+export class Configuration {
+    public url = '';
+    public function = '';
+    public webrfcLog = '';
+    public webrfcLogin = '';
+    public webrfcUser = '';
+}
+
 // import * as packageJson from '../../package.json';
 // const version = packageJson.default.version;
 
@@ -29,7 +37,6 @@ import { newRowsAnimation } from '../animations/table-row-animation';
   animations: [newRowsAnimation]
 })
 export class PmtDataTableComponent implements OnInit {
-  appVersion;
   @Input() title = 'Sample table';
   @Input() color = '';
   @Input() filter = true;
@@ -198,6 +205,8 @@ export class PmtDataTableComponent implements OnInit {
     this.response = this.dataSourceService.getResponse();
     if ( this.dataSourceService.getSuccess()  ) {
         this.displayedColumnsNames = this.dataSourceService.getNode(this.table)['columnsNames'];
+        this.displayedColumns = this.dataSourceService.getNode(this.table)['columns'];
+debugger;
         this.dataSource.data = this.dataSourceService.getNode(this.table)['data'];
         this.iconButtons.filter(item => item.icon === 'delete')[0].disabled = false;
     } else {
@@ -405,7 +414,6 @@ export class PmtDataTableComponent implements OnInit {
         }
       }
     }   // for (let i = 0; i < this.fields.length; i++) {
-    const so = this;
     this.progress = true;
 
         /*
@@ -424,9 +432,11 @@ export class PmtDataTableComponent implements OnInit {
 				});
 		*/
 
-    if ( so.refreshColumns === 'true' ) {
-      so.displayedColumns = [];
-      so.displayedColumnsNames = [];
+    let reloadColumns = false;
+    if ( this.refreshColumns === 'true' ) {
+//      this.displayedColumns = [];
+//      this.displayedColumnsNames = [];
+      reloadColumns = true;
     }
 
     this. dataSourceService.call( this.baseUrl,
@@ -440,7 +450,8 @@ export class PmtDataTableComponent implements OnInit {
                                   60000, // sets timeout to 60 seconds
                                   this.getResponse.bind(this),
                                   this.displayedColumns,
-                                  this.displayedColumnsNames
+                                  this.displayedColumnsNames,
+                                  reloadColumns
       ) ;
   }   // public getData( )
 
